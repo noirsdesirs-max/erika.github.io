@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natal com VanVan e Carlão</title>
+    <style>
+        body {
+            background-color: #000000; /* Fundo Preto */
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #ff0000;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        /* Container dos blocos de tempo */
+        #contador-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Caixas individuais para Dias, Horas, Min, Seg */
+        .bloco-tempo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+            border: 1px solid #333;
+        }
+
+        .numero {
+            font-size: 3.5rem;
+            font-weight: bold;
+            /* Animação do pisca-pisca aplicada aqui */
+            animation: piscaPisca 1.5s infinite alternate; 
+        }
+
+        /* Cores alternadas para os números (Verde e Vermelho) */
+        #dias, #minutos { color: #2dc937; text-shadow: 0 0 10px #2dc937; }
+        #horas, #segundos { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+
+        .legenda {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+            color: #ccc;
+        }
+
+        .decoracao {
+            font-size: 2.5rem;
+            margin: 20px;
+        }
+
+        /* Animação de Pisca-Pisca (brilho e leve transparência) */
+        @keyframes piscaPisca {
+            0% {
+                opacity: 1;
+                filter: brightness(1.5);
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0.6;
+                filter: brightness(0.8);
+                transform: scale(1);
+            }
+        }
+
+        /* Responsividade para celulares */
+        @media (max-width: 600px) {
+            .numero { font-size: 2.5rem; }
+            .bloco-tempo { min-width: 60px; padding: 10px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="decoracao">🎄 ✨ 🎅</div>
+
+    <h1>Contagem Regressiva para o Natal<br>com VanVan e Carlão</h1>
+
+    <div id="contador-container">
+        <div class="bloco-tempo">
+            <span id="dias" class="numero">00</span>
+            <span class="legenda">Dias</span>
+        </div>
+        <div class="bloco-tempo">
+            <span id="horas" class="numero">00</span>
+            <span class="legenda">Horas</span>
+        </div>
+        <div class="bloco-tempo">
+            <span id="minutos" class="numero">00</span>
+            <span class="legenda">Min</span>
+        </div>
+        <div class="bloco-tempo">
+            <span id="segundos" class="numero">00</span>
+            <span class="legenda">Seg</span>
+        </div>
+    </div>
+
+    <div class="decoracao">🎁 ❄️ 🕯️</div>
+
+    <script>
+        function atualizarContador() {
+            const hoje = new Date();
+            const anoAtual = hoje.getFullYear();
+            
+            // Define a data alvo: 23 de Dezembro às 00:00:00
+            const dataAlvo = new Date(anoAtual, 11, 23, 0, 0, 0); 
+
+            const diferenca = dataAlvo - hoje;
+
+            if (diferenca <= 0) {
+                document.getElementById("contador-container").innerHTML = "<div style='font-size:3rem; color: gold;'>🎄 CHEGOU! 🎄</div>";
+                return;
+            }
+
+            // Cálculos matemáticos
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            // Atualiza o HTML e adiciona um zero na frente se for menor que 10 (ex: 09)
+            document.getElementById("dias").innerText = dias < 10 ? "0" + dias : dias;
+            document.getElementById("horas").innerText = horas < 10 ? "0" + horas : horas;
+            document.getElementById("minutos").innerText = minutos < 10 ? "0" + minutos : minutos;
+            document.getElementById("segundos").innerText = segundos < 10 ? "0" + segundos : segundos;
+        }
+
+        setInterval(atualizarContador, 1000); // Atualiza a cada segundo
+        atualizarContador(); // Roda a primeira vez imediatamente
+    </script>
+
+</body>
+</html>
